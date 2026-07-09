@@ -27,11 +27,6 @@ namespace REL
 			OG = 1 << 1,
 
 			/**
-			 * Backwards-compatible alias: F4 is the same as OG.
-			 */
-			F4 = OG,
-
-			/**
 			 * The FALLOUT runtime is a Next-Generation Update release (versions 1.10.980 through 1.10.984).
 			 */
 			NG = 1 << 2,
@@ -97,7 +92,7 @@ namespace REL
 		/**
          * Returns whether the current FALLOUT runtime is a pre-Nextgen Update Fallout release.
          */
-		[[nodiscard]] static FALLOUT_REL bool IsF4() noexcept
+		[[nodiscard]] static FALLOUT_REL bool IsOG() noexcept
 		{
 			// "F4" (classic Fallout 4 non-VR) is treated as OG
 			return GetRuntime() == Runtime::OG;
@@ -126,8 +121,8 @@ namespace REL
 
 		static constexpr auto ENVIRONMENT = L"F4SE_RUNTIME"sv;
 
-		static constexpr std::array<std::wstring_view, 2> RUNTIMES{ { L"Fallout4VR.exe",
-			L"Fallout4.exe" } };
+		static constexpr std::array<std::wstring_view, 3> RUNTIMES{ { L"Fallout4VR.exe",
+			L"Fallout4.exe", L"Fallout4.rne" } };
 
 		void clear();
 
