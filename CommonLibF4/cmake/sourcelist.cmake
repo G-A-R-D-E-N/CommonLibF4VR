@@ -295,6 +295,7 @@ set(SOURCES
 	include/RE/Havok/hknpUniqueBodyIdHitCollector.h
 	include/RE/Havok/hknpWorld.h
 	include/RE/I/Interface3D.h
+	include/RE/IDs_VTABLE.h
 	include/RE/M/MenuOpenCloseEvent.h
 	include/RE/N/NiNode.h
 	include/RE/N/NiPoint3.h
