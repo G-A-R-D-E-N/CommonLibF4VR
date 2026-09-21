@@ -1,3 +1,3 @@
 #pragma once
 
-#include "RE/Bethesda/IMenu.h"
+#include <RE/Fallout.h>

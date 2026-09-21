@@ -1,3 +1,3 @@
 #pragma once
 
-#include "RE/NetImmerse/NiNode.h"
+#include <RE/Fallout.h>

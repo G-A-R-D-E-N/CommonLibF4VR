@@ -1,3 +1,3 @@
 #pragma once
 
-#include "RE/Bethesda/BSScriptUtil.h"
+#include <RE/Fallout.h>

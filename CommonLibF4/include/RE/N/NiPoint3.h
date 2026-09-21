@@ -1,3 +1,3 @@
 #pragma once
 
-#include "RE/NetImmerse/NiPoint.h"
+#include <RE/Fallout.h>

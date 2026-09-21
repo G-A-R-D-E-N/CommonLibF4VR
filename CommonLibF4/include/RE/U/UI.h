@@ -1,3 +1,3 @@
 #pragma once
 
-#include "RE/Bethesda/UI.h"
+#include <RE/Fallout.h>

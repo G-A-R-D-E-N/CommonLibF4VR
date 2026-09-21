@@ -1,3 +1,3 @@
 #pragma once
 
-#include "RE/Bethesda/BSShaderProperty.h"
+#include <RE/Fallout.h>

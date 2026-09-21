@@ -1,3 +1,3 @@
 #pragma once
 
-#include "RE/Bethesda/BSGeometry.h"
+#include <RE/Fallout.h>

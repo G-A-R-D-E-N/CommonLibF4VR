@@ -1,3 +1,3 @@
 #pragma once
 
-#include "RE/Bethesda/Interface3D.h"
+#include <RE/Fallout.h>
