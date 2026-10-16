@@ -135,7 +135,7 @@ namespace RE
 		}
 		hkVector4f& GetNormalized()
 		{
-			hkVector4f norm = *this;
+			hkVector4f& norm = *this;
 			norm.Normalize();
 			return norm;
 		}
