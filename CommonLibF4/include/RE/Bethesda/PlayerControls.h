@@ -76,6 +76,15 @@ namespace RE
 		NiPoint2                        lookInputVecNormalized;     // 10
 		NiPoint2                        prevMoveVec;                // 18
 		NiPoint2                        prevLookVec;                // 20
+#if defined(ENABLE_FALLOUT_VR) && !defined(ENABLE_FALLOUT_NG) && !defined(ENABLE_FALLOUT_F4)
+		std::byte                       unk28[0xC4];                // 28
+		bool                            autoMove;                   // EC
+		bool                            running;                    // ED
+		bool                            togglePOV;                  // EE
+		bool                            vanityModeEnabled;          // EF
+		bool                            checkHeldStates;            // F0
+		bool                            setupHeldStatesForRelease;  // F1
+#else
 		BSSpring::SpringState<NiPoint3> rotationSpeedSpring;        // 28
 		bool                            autoMove;                   // 44
 		bool                            running;                    // 45
@@ -83,8 +92,13 @@ namespace RE
 		bool                            vanityModeEnabled;          // 47
 		bool                            checkHeldStates;            // 48
 		bool                            setupHeldStatesForRelease;  // 49
+#endif
 	};
+#if defined(ENABLE_FALLOUT_VR) && !defined(ENABLE_FALLOUT_NG) && !defined(ENABLE_FALLOUT_F4)
+	static_assert(sizeof(PlayerControlsData) == 0xF4);
+#else
 	static_assert(sizeof(PlayerControlsData) == 0x4C);
+#endif
 
 	class PlayerInputHandler :
 		public BSInputEventUser  // 00
@@ -191,6 +205,14 @@ namespace RE
 		void RegisterHandler(HeldStateHandler* a_handler) { DoRegisterHandler(a_handler, true); }
 
 		// members
+#if defined(ENABLE_FALLOUT_VR) && !defined(ENABLE_FALLOUT_NG) && !defined(ENABLE_FALLOUT_F4)
+		alignas(4) std::byte          unk044[0xC];             // 044
+		PlayerControlsData            data;                    // 050
+		std::byte                     unk144[0xC];             // 144
+		BSTArray<PlayerInputHandler*> handlers;                // 150
+		BSTArray<HeldStateHandler*>   heldStateHandlers;       // 168
+		std::byte                     unk180[0x1B8];           // 180
+#else
 		PlayerControlsData            data;                    // 044
 		BSTArray<PlayerInputHandler*> handlers;                // 090
 		BSTArray<HeldStateHandler*>   heldStateHandlers;       // 0A8
@@ -216,6 +238,7 @@ namespace RE
 		bool                          blockPlayerInput;        // 251
 		float                         cameraAutoRotationX;     // 254
 		float                         cameraAutoRotationY;     // 258
+#endif
 
 	private:
 		void DoRegisterHandler(PlayerInputHandler* a_handler, bool a_isHeldStateHandler)
@@ -225,5 +248,9 @@ namespace RE
 			return func(this, a_handler, a_isHeldStateHandler);
 		}
 	};
+#if defined(ENABLE_FALLOUT_VR) && !defined(ENABLE_FALLOUT_NG) && !defined(ENABLE_FALLOUT_F4)
+	static_assert(sizeof(PlayerControls) == 0x338);
+#else
 	static_assert(sizeof(PlayerControls) == 0x260);
+#endif
 }
