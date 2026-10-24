@@ -5,6 +5,12 @@
 
 namespace RE
 {
+#if defined(ENABLE_FALLOUT_VR) && !defined(ENABLE_FALLOUT_NG) && !defined(ENABLE_FALLOUT_F4)
+	class VrWandTriggerAnalogEvent;
+	class VrWandTouchpadSwipeEvent;
+	class VrWandTouchpadPositionEvent;
+#endif
+
 	class alignas(0x08) BSInputEventUser
 	{
 	public:
@@ -15,13 +21,18 @@ namespace RE
 
 		// add
 		virtual bool ShouldHandleEvent(const InputEvent*) { return false; }       // 01
-		virtual void OnKinectEvent(const KinectEvent*) { return; }                // 02
-		virtual void OnDeviceConnectEvent(const DeviceConnectEvent*) { return; }  // 03
-		virtual void OnThumbstickEvent(const ThumbstickEvent*) { return; }        // 04
-		virtual void OnCursorMoveEvent(const CursorMoveEvent*) { return; }        // 05
-		virtual void OnMouseMoveEvent(const MouseMoveEvent*) { return; }          // 06
-		virtual void OnCharacterEvent(const CharacterEvent*) { return; }          // 07
-		virtual void OnButtonEvent(const ButtonEvent*) { return; }                // 08
+#if defined(ENABLE_FALLOUT_VR) && !defined(ENABLE_FALLOUT_NG) && !defined(ENABLE_FALLOUT_F4)
+		virtual void OnVrWandTriggerAnalogEvent(const VrWandTriggerAnalogEvent*) { return; }        // 02
+		virtual void OnVrWandTouchpadSwipeEvent(const VrWandTouchpadSwipeEvent*) { return; }        // 03
+		virtual void OnVrWandTouchpadPositionEvent(const VrWandTouchpadPositionEvent*) { return; }  // 04
+#endif
+		virtual void OnKinectEvent(const KinectEvent*) { return; }                // 02 (VR 05)
+		virtual void OnDeviceConnectEvent(const DeviceConnectEvent*) { return; }  // 03 (VR 06)
+		virtual void OnThumbstickEvent(const ThumbstickEvent*) { return; }        // 04 (VR 07)
+		virtual void OnCursorMoveEvent(const CursorMoveEvent*) { return; }        // 05 (VR 08)
+		virtual void OnMouseMoveEvent(const MouseMoveEvent*) { return; }          // 06 (VR 09)
+		virtual void OnCharacterEvent(const CharacterEvent*) { return; }          // 07 (VR 0A)
+		virtual void OnButtonEvent(const ButtonEvent*) { return; }                // 08 (VR 0B)
 
 		F4_HEAP_REDEFINE_NEW(BSInputEventUser);
 

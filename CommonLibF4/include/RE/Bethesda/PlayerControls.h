@@ -101,7 +101,7 @@ namespace RE
 		virtual ~PlayerInputHandler() = default;  // 00
 
 		// add
-		virtual void PerFrameUpdate() { return; };  // 09
+		virtual void PerFrameUpdate() { return; };  // 09 (VR 0C)
 
 		// members
 		PlayerControlsData& data;                       // 10
@@ -124,12 +124,12 @@ namespace RE
 		virtual ~HeldStateHandler() = default;  // 00
 
 		// add
-		virtual void UpdateHeldStateActive(const ButtonEvent* a_event)  // 10
+		virtual void UpdateHeldStateActive(const ButtonEvent* a_event)  // 10 (VR 13)
 		{
 			heldStateActive = a_event && (a_event->value != 0.0F || a_event->heldDownSecs < 0.0F);
 		}
 
-		virtual void SetHeldStateActive(bool a_flag) { heldStateActive = a_flag; }  // 11
+		virtual void SetHeldStateActive(bool a_flag) { heldStateActive = a_flag; }  // 11 (VR 14)
 
 		// members
 		bool heldStateActive{ false };      // 20
