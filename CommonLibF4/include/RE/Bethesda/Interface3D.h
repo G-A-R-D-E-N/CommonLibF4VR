@@ -385,6 +385,64 @@ namespace RE
 			}
 
 			// members
+#if defined(ENABLE_FALLOUT_VR) && !defined(ENABLE_FALLOUT_NG) && !defined(ENABLE_FALLOUT_F4)
+			std::byte                                          unk000[0x28];                 // 000
+			BSTAlignedArray<UIShaderFXInfo>                    backgroundFXInfos;            // 028
+			BSReadWriteLock                                    cachedQuadsLock;              // 040
+			NiColorA                                           clearColor;                   // 048
+			float                                              opacityAlpha;                 // 058
+			bool                                               enabled;                      // 05C
+			bool                                               offscreen3DEnabled;           // 05D
+			bool                                               hideScreenWhenDisabled;       // 05E
+			bool                                               usePremultAlpha;              // 05F
+			bool                                               clearRenderTarget;            // 060
+			bool                                               clearDepthStencilMainScreen;  // 061
+			bool                                               clearDepthStencilOffscreen;   // 062
+			bool                                               postAA;                       // 063
+			bool                                               useFullPremultAlpha;          // 064
+			bool                                               alwaysRenderWhenEnabled;      // 065
+			bool                                               defRenderMainScreen;          // 066
+			bool                                               enableAO;                     // 067
+			bool                                               useLongRangeCamera;           // 068
+			bool                                               needsLightSetup;              // 069
+			bool                                               needsLightSetupOffscreen;     // 06A
+			REX::EnumSet<BackgroundMode, std::int32_t>         bgmode;                       // 06C
+			REX::EnumSet<PostEffect, std::int32_t>             postfx;                       // 070
+			REX::EnumSet<HighlightEffect, std::int32_t>        highlightfx;                  // 074
+			REX::EnumSet<OffscreenMenuSize, std::int32_t>      omsize;                       // 078
+			REX::EnumSet<ScreenMode, std::int32_t>             screenmode;                   // 07C
+			REX::EnumSet<OffscreenMenuBlendMode, std::int32_t> menuBlend;                    // 080
+			REX::EnumSet<UI_DEPTH_PRIORITY, std::int32_t>      depth;                        // 084
+			NiPointer<NiAVObject>                              worldAttachedElementRoot;     // 088
+			NiPointer<NiAVObject>                              screenAttachedElementRoot;    // 090
+			NiPointer<NiAVObject>                              offscreenElement;             // 098
+			BSTArray<NiPointer<BSGeometry>>                    displayGeometry;              // 0A0
+			NiAVObject*                                        elementRequiringFullVieport;  // 0B8
+			NiAVObject*                                        highlightedElement;           // 0C0
+			bool                                               highlightOffscreen;           // 0C8
+			OldScreenEffectControl                             pipfx;                        // 0CC
+			OldScreenEffectControl                             vatsfx;                       // 13C
+			alignas(8) std::byte                               unk1B0[0x10];                 // 1B0
+			NiPointer<NiCamera>                                pipboyAspect;                 // 1C0
+			NiPointer<NiCamera>                                nativeAspect;                 // 1C8
+			NiPointer<NiCamera>                                nativeAspectLongRange;        // 1D0
+			std::int32_t                                       customRenderTarget;           // 1D8
+			std::int32_t                                       customSwapTarget;             // 1DC
+			BSTArray<LightParams>                              mainLights;                   // 1E0
+			BSTArray<LightParams>                              offscreenLights;              // 1F8
+			float                                              menuDiffuseIntensity;         // 210
+			float                                              menuEmitIntensity;            // 214
+			float                                              menuDiffuseIntensityWA;       // 218
+			float                                              menuEmitIntensityWA;          // 21C
+			BSFixedString                                      name;                         // 220
+			BSFixedString                                      screenGeomName;               // 228
+			BSFixedString                                      screenMaterialName;           // 230
+			BSFixedString                                      maskedGeomName;               // 238
+			BSFixedString                                      maskedMaterialName;           // 240
+			NiDirectionalLight*                                directionalLight;             // 248
+			NiPointer<ShadowSceneNode>                         screenSSN;                    // 250
+			NiPointer<ShadowSceneNode>                         offscreenSSN;                 // 258
+#else
 			BSTAlignedArray<UIShaderFXInfo>                    colorFXInfos;                 // 000
 			BSTAlignedArray<UIShaderFXInfo>                    backgroundFXInfos;            // 018
 			BSReadWriteLock                                    cachedQuadsLock;              // 030
@@ -441,7 +499,12 @@ namespace RE
 			NiDirectionalLight*                                directionalLight;             // 230
 			NiPointer<ShadowSceneNode>                         screenSSN;                    // 238
 			NiPointer<ShadowSceneNode>                         offscreenSSN;                 // 240
+#endif
 		};
+#if defined(ENABLE_FALLOUT_VR) && !defined(ENABLE_FALLOUT_NG) && !defined(ENABLE_FALLOUT_F4)
+		static_assert(sizeof(Renderer) == 0x260);
+#else
 		static_assert(sizeof(Renderer) == 0x248);
+#endif
 	}
 }

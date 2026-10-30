@@ -61,14 +61,14 @@ namespace RE
 		virtual ~TESCameraState();  // 00
 
 		// add
-		virtual void Begin() { return; }                                                         // 09
-		virtual void End() { return; }                                                           // 0A
-		virtual void Update(BSTSmartPointer<TESCameraState>& a_nextState);                       // 0B
-		virtual void GetRotation(NiQuaternion& a_rotation) const;                                // 0C
-		virtual void GetTranslation(NiPoint3& a_translation) const;                              // 0D
-		virtual void SaveGame([[maybe_unused]] BGSSaveFormBuffer* a_saveGameBuffer) { return; }  // 0E
-		virtual void LoadGame([[maybe_unused]] BGSLoadFormBuffer* a_loadGameBuffer) { return; }  // 0F
-		virtual void Revert([[maybe_unused]] BGSLoadFormBuffer* a_loadGameBuffer) { return; }    // 10
+		virtual void Begin() { return; }                                                         // 09 (VR 0C)
+		virtual void End() { return; }                                                           // 0A (VR 0D)
+		virtual void Update(BSTSmartPointer<TESCameraState>& a_nextState);                       // 0B (VR 0E)
+		virtual void GetRotation(NiQuaternion& a_rotation) const;                                // 0C (VR 0F)
+		virtual void GetTranslation(NiPoint3& a_translation) const;                              // 0D (VR 10)
+		virtual void SaveGame([[maybe_unused]] BGSSaveFormBuffer* a_saveGameBuffer) { return; }  // 0E (VR 11)
+		virtual void LoadGame([[maybe_unused]] BGSLoadFormBuffer* a_loadGameBuffer) { return; }  // 0F (VR 12)
+		virtual void Revert([[maybe_unused]] BGSLoadFormBuffer* a_loadGameBuffer) { return; }    // 10 (VR 13)
 
 		// members
 		TESCamera*                               camera;  // 18
@@ -104,11 +104,11 @@ namespace RE
 		static constexpr auto STATE{ CameraStates::k3rdPerson };
 
 		// add
-		virtual void ProcessWeaponDrawnChange(bool a_drawn);                           // 11
-		virtual bool GetFreeRotationMode() const;                                      // 12
-		virtual void SetFreeRotationMode(bool a_cameraEnable, bool a_modifyRotation);  // 13
-		virtual void UpdateRotation();                                                 // 14
-		virtual void HandleLookInput(const NiPoint2& a_input);                         // 15
+		virtual void ProcessWeaponDrawnChange(bool a_drawn);                           // 11 (VR 14)
+		virtual bool GetFreeRotationMode() const;                                      // 12 (VR 15)
+		virtual void SetFreeRotationMode(bool a_cameraEnable, bool a_modifyRotation);  // 13 (VR 16)
+		virtual void UpdateRotation();                                                 // 14 (VR 17)
+		virtual void HandleLookInput(const NiPoint2& a_input);                         // 15 (VR 18)
 
 		// members
 		NiQuaternion          rotation;                      // 028
