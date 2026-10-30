@@ -8,6 +8,11 @@ set(SOURCES
 	include/F4SE/Logger.h
 	include/F4SE/Trampoline.h
 	include/F4SE/Version.h
+	include/RE/B/BSGeometry.h
+	include/RE/B/BSLightingShaderMaterialBase.h
+	include/RE/B/BSLightingShaderProperty.h
+	include/RE/B/BSScriptUtil.h
+	include/RE/B/BSShaderProperty.h
 	include/RE/Bethesda/AITimeStamp.h
 	include/RE/Bethesda/ActiveEffect.h
 	include/RE/Bethesda/Actor.h
@@ -251,7 +256,10 @@ set(SOURCES
 	include/RE/Bethesda/bhkCharacterController.h
 	include/RE/Bethesda/bhkPhysicsSystem.h
 	include/RE/Bethesda/bhkPickData.h
+	include/RE/C/Console.h
+	include/RE/F/FlatScreenModel.h
 	include/RE/Fallout.h
+	include/RE/G/GameScript.h
 	include/RE/Havok/hkArray.h
 	include/RE/Havok/hkBaseObject.h
 	include/RE/Havok/hkBaseTypes.h
@@ -287,6 +295,12 @@ set(SOURCES
 	include/RE/Havok/hknpShape.h
 	include/RE/Havok/hknpUniqueBodyIdHitCollector.h
 	include/RE/Havok/hknpWorld.h
+	include/RE/I/Interface3D.h
+	include/RE/IDs_VTABLE.h
+	include/RE/M/MenuOpenCloseEvent.h
+	include/RE/N/NiNode.h
+	include/RE/N/NiPoint3.h
+	include/RE/N/NiTexture.h
 	include/RE/NetImmerse/NiAVObject.h
 	include/RE/NetImmerse/NiAlphaProperty.h
 	include/RE/NetImmerse/NiBinaryStream.h
@@ -333,6 +347,7 @@ set(SOURCES
 	include/RE/NetImmerse/NiTransform.h
 	include/RE/NetImmerse/NiUpdateData.h
 	include/RE/NiRTTI_IDs.h
+	include/RE/P/PlayerCharacter.h
 	include/RE/RTTI.h
 	include/RE/RTTI_IDs.h
 	include/RE/Scaleform/GFx/GFx_AS3.h
@@ -374,6 +389,11 @@ set(SOURCES
 	include/RE/Scaleform/Render/Render_TreeShape.h
 	include/RE/Scaleform/Render/Render_Types2D.h
 	include/RE/Scaleform/Render/Render_Viewport.h
+	include/RE/T/TESBoundObject.h
+	include/RE/T/TESForm.h
+	include/RE/T/TESObjectREFR.h
+	include/RE/U/UI.h
+	include/RE/U/UIMessageQueue.h
 	include/RE/VTABLE_IDs.h
 	include/RE/msvc/functional.h
 	include/RE/msvc/memory.h
@@ -390,6 +410,7 @@ set(SOURCES
 	include/REL/Relocation.h
 	include/REL/Segment.h
 	include/REL/Version.h
+	include/REX/FModule.h
 	include/REX/PS4.h
 	include/REX/PS4/SCEPAD.h
 	include/REX/REX.h
@@ -420,6 +441,7 @@ set(SOURCES
 	include/REX/W32/USER32.h
 	include/REX/W32/VERSION.h
 	include/REX/W32/XINPUT.h
+	include/VRCompat.h
 	src/F4SE/API.cpp
 	src/F4SE/Impl/PCH.cpp
 	src/F4SE/InputMap.cpp
