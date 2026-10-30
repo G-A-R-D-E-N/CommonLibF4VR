@@ -22,6 +22,25 @@ namespace RE
 			kVATS = 1 << 11
 		};
 
+		inline USER_EVENT_FLAG operator|(USER_EVENT_FLAG lhs, USER_EVENT_FLAG rhs)
+		{
+			using U = std::underlying_type_t<USER_EVENT_FLAG>;
+			return static_cast<USER_EVENT_FLAG>(static_cast<U>(lhs) | static_cast<U>(rhs));
+		}
+
+		inline USER_EVENT_FLAG operator&(USER_EVENT_FLAG lhs, USER_EVENT_FLAG rhs)
+		{
+			using U = std::underlying_type_t<USER_EVENT_FLAG>;
+			return static_cast<USER_EVENT_FLAG>(
+				static_cast<U>(lhs) & static_cast<U>(rhs));
+		}
+
+		inline USER_EVENT_FLAG operator~(USER_EVENT_FLAG value)
+		{
+			using U = std::underlying_type_t<USER_EVENT_FLAG>;
+			return static_cast<USER_EVENT_FLAG>(~static_cast<U>(value));
+		}
+
 		enum class INPUT_CONTEXT_ID
 		{
 			kMainGameplay = 0,
@@ -56,7 +75,12 @@ namespace RE
 			kVertibird,
 			kPlayBinkMenu,
 			kRobotModAddendum,
+#if !defined(ENABLE_FALLOUT_VR) || defined(ENABLE_FALLOUT_NG) || defined(ENABLE_FALLOUT_F4)
+			// VR has no Creation Club context, so it has 32 and kNone is 33: Fallout4VR.exe has no
+			// CreationClubMenu, ControlMap's constructor (0x1BB38D0) zeroes a table of 32, and a menu that
+			// takes no context holds 33
 			kCreationClub,
+#endif
 
 			kTotal,
 

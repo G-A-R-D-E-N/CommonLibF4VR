@@ -113,6 +113,10 @@ namespace RE
 		BGSSoundTagComponent    soundTagComponent;  // 60
 	};
 	static_assert(sizeof(TESBoundObject) == 0x68);
+	// f4sevr-port: lock down field offsets confirmed against f4sevr Forms.h
+	static_assert(offsetof(TESBoundObject, objectTemplate) == 0x30);
+	static_assert(offsetof(TESBoundObject, previewTransform) == 0x50);
+	static_assert(offsetof(TESBoundObject, soundTagComponent) == 0x60);
 
 	class __declspec(novtable) BGSComponent :
 		public TESBoundObject,      // 00
@@ -208,6 +212,10 @@ namespace RE
 		BGSAttachParentArray attachParents;  // 2C8
 	};
 	static_assert(sizeof(TESObjectARMO) == 0x2E0);
+	// f4sevr-port: lock down field offsets confirmed against f4sevr Forms.h
+	static_assert(offsetof(TESObjectARMO, armorData) == 0x250);
+	static_assert(offsetof(TESObjectARMO, modelArray) == 0x2A8);
+	static_assert(offsetof(TESObjectARMO, attachParents) == 0x2C8);
 
 	struct OBJ_BOOK
 	{
@@ -657,52 +665,51 @@ namespace RE
 
 		bool IsMeleeWeapon() const
 		{
-			return weaponData.type.any(
-				WEAPON_TYPE::kOneHandSword,
-				WEAPON_TYPE::kOneHandDagger,
-				WEAPON_TYPE::kOneHandAxe,
-				WEAPON_TYPE::kOneHandMace,
-				WEAPON_TYPE::kTwoHandSword,
-				WEAPON_TYPE::kTwoHandAxe);
+			const auto type = weaponData.type.get();
+			return type == WEAPON_TYPE::kOneHandSword ||
+			       type == WEAPON_TYPE::kOneHandDagger ||
+			       type == WEAPON_TYPE::kOneHandAxe ||
+			       type == WEAPON_TYPE::kOneHandMace ||
+			       type == WEAPON_TYPE::kTwoHandSword ||
+			       type == WEAPON_TYPE::kTwoHandAxe;
 		}
 
 		bool IsGunWeapon() const
 		{
-			return weaponData.type.any(
-				WEAPON_TYPE::kGun);
+			return weaponData.type.get() == WEAPON_TYPE::kGun;
 		}
 
 		bool IsThrownWeapon() const
 		{
-			return weaponData.type.any(
-				WEAPON_TYPE::kGrenade,
-				WEAPON_TYPE::kMine);
+			const auto type = weaponData.type.get();
+			return type == WEAPON_TYPE::kGrenade ||
+			       type == WEAPON_TYPE::kMine;
 		}
 
 		bool IsOneHandedWeapon() const
 		{
-			return weaponData.type.any(
-				WEAPON_TYPE::kOneHandSword,
-				WEAPON_TYPE::kOneHandDagger,
-				WEAPON_TYPE::kOneHandAxe,
-				WEAPON_TYPE::kOneHandMace);
+			const auto type = weaponData.type.get();
+			return type == WEAPON_TYPE::kOneHandSword ||
+			       type == WEAPON_TYPE::kOneHandDagger ||
+			       type == WEAPON_TYPE::kOneHandAxe ||
+			       type == WEAPON_TYPE::kOneHandMace;
 		}
 
 		bool IsTwoHandedWeapon() const
 		{
-			return weaponData.type.any(
-				WEAPON_TYPE::kTwoHandSword,
-				WEAPON_TYPE::kTwoHandAxe);
+			const auto type = weaponData.type.get();
+			return type == WEAPON_TYPE::kTwoHandSword ||
+			       type == WEAPON_TYPE::kTwoHandAxe;
 		}
 
 		bool IsRangedWeapon() const
 		{
-			return weaponData.type.any(
-				WEAPON_TYPE::kBow,
-				WEAPON_TYPE::kStaff,
-				WEAPON_TYPE::kGun,
-				WEAPON_TYPE::kGrenade,
-				WEAPON_TYPE::kMine);
+			const auto type = weaponData.type.get();
+			return type == WEAPON_TYPE::kBow ||
+			       type == WEAPON_TYPE::kStaff ||
+			       type == WEAPON_TYPE::kGun ||
+			       type == WEAPON_TYPE::kGrenade ||
+			       type == WEAPON_TYPE::kMine;
 		}
 
 		bool IsBoundWeapon() const
@@ -1119,6 +1126,13 @@ namespace RE
 		static constexpr auto RTTI{ RTTI::TESObjectARMA };
 		static constexpr auto VTABLE{ VTABLE::TESObjectARMA };
 		static constexpr auto FORM_ID{ ENUM_FORM_ID::kARMA };
+
+		// f4sevr-port: SDK GameObjects.cpp:7 — formats a node-name suffix string from
+		// this addon's formID, the NPC's sex, and the parent armor's formID.
+		// Original signature: bool GetNodeName(char* dest, TESNPC* npc, TESObjectARMO* armor).
+		// Buffer must be at least MAX_PATH bytes (260). Defined inline at end of header
+		// (after TESNPC + TESObjectARMO are fully visible).
+		bool GetNodeName(char* a_dstBuff, std::size_t a_buffSize, TESNPC* a_npc, TESObjectARMO* a_armor);
 
 		// members
 		OBJ_ARMA                             data;                     // 040

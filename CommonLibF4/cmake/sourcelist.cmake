@@ -55,6 +55,7 @@ set(SOURCES
 	include/RE/Bethesda/BSInputEventReceiver.h
 	include/RE/Bethesda/BSInputEventSingleUser.h
 	include/RE/Bethesda/BSInputEventUser.h
+	include/RE/Bethesda/BSLight.h
 	include/RE/Bethesda/BSLock.h
 	include/RE/Bethesda/BSMTAManager.h
 	include/RE/Bethesda/BSMemStorage.h
@@ -133,6 +134,7 @@ set(SOURCES
 	include/RE/Bethesda/BSShader.h
 	include/RE/Bethesda/BSShaderMaterial.h
 	include/RE/Bethesda/BSShaderProperty.h
+	include/RE/Bethesda/BSSkin.h
 	include/RE/Bethesda/BSSoundHandle.h
 	include/RE/Bethesda/BSSpring.h
 	include/RE/Bethesda/BSStorage.h
@@ -247,6 +249,7 @@ set(SOURCES
 	include/RE/Bethesda/VATS.h
 	include/RE/Bethesda/Workshop.h
 	include/RE/Bethesda/bhkCharacterController.h
+	include/RE/Bethesda/bhkPhysicsSystem.h
 	include/RE/Bethesda/bhkPickData.h
 	include/RE/Fallout.h
 	include/RE/Havok/hkArray.h
@@ -262,8 +265,14 @@ set(SOURCES
 	include/RE/Havok/hkReferencedObject.h
 	include/RE/Havok/hkSimdFloat.h
 	include/RE/Havok/hkVector4.h
+	include/RE/Havok/hknpAabbQuery.h
+	include/RE/Havok/hknpActionManager.h
 	include/RE/Havok/hknpAllHitsCollector.h
+	include/RE/Havok/hknpBSMouseSpringAction.h
+	include/RE/Havok/hknpBody.h
+	include/RE/Havok/hknpBodyCinfo.h
 	include/RE/Havok/hknpBodyId.h
+	include/RE/Havok/hknpCapsuleShape.h
 	include/RE/Havok/hknpCharacterContext.h
 	include/RE/Havok/hknpCharacterState.h
 	include/RE/Havok/hknpCharacterSurfaceInfo.h
@@ -271,9 +280,13 @@ set(SOURCES
 	include/RE/Havok/hknpClosestUniqueBodyIdHitCollector.h
 	include/RE/Havok/hknpCollisionQueryCollector.h
 	include/RE/Havok/hknpCollisionResult.h
+	include/RE/Havok/hknpConstraintCinfo.h
+	include/RE/Havok/hknpContactEvent.h
 	include/RE/Havok/hknpMaterialId.h
+	include/RE/Havok/hknpMotion.h
 	include/RE/Havok/hknpShape.h
 	include/RE/Havok/hknpUniqueBodyIdHitCollector.h
+	include/RE/Havok/hknpWorld.h
 	include/RE/NetImmerse/NiAVObject.h
 	include/RE/NetImmerse/NiAlphaProperty.h
 	include/RE/NetImmerse/NiBinaryStream.h
@@ -287,12 +300,14 @@ set(SOURCES
 	include/RE/NetImmerse/NiFile.h
 	include/RE/NetImmerse/NiFlags.h
 	include/RE/NetImmerse/NiFrustum.h
+	include/RE/NetImmerse/NiLight.h
 	include/RE/NetImmerse/NiMatrix3.h
 	include/RE/NetImmerse/NiMemStream.h
 	include/RE/NetImmerse/NiNode.h
 	include/RE/NetImmerse/NiObject.h
 	include/RE/NetImmerse/NiObjectNET.h
 	include/RE/NetImmerse/NiPoint.h
+	include/RE/NetImmerse/NiPointLight.h
 	include/RE/NetImmerse/NiProperty.h
 	include/RE/NetImmerse/NiQuaternion.h
 	include/RE/NetImmerse/NiRTTI.h
@@ -452,6 +467,7 @@ set(SOURCES
 	src/REL/IAT.cpp
 	src/REL/IDDB.cpp
 	src/REL/Module.cpp
+	src/REL/NoGame.cpp
 	src/REL/Relocation.cpp
 	src/REL/Version.cpp
 	src/REX/W32.cpp
