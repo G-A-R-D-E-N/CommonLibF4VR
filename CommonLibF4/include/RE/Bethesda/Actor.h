@@ -2,6 +2,7 @@
 
 #include "RE/Bethesda/AITimeStamp.h"
 #include "RE/Bethesda/BGSDefaultObjectManager.h"
+#include "RE/Bethesda/BGSInventoryItem.h"
 #include "RE/Bethesda/BSFixedString.h"
 #include "RE/Bethesda/BSLock.h"
 #include "RE/Bethesda/BSPointerHandle.h"
@@ -13,6 +14,7 @@
 #include "RE/Bethesda/BSTSmartPointer.h"
 #include "RE/Bethesda/BSTTuple.h"
 #include "RE/Bethesda/IMovementInterface.h"
+#include "RE/Bethesda/TESBoundObjects.h"
 #include "RE/Bethesda/TESObjectREFRs.h"
 #include "RE/NetImmerse/NiFlags.h"
 #include "RE/NetImmerse/NiPoint.h"
@@ -349,130 +351,152 @@ namespace RE
 	{
 	public:
 		// members
-		BSTEventSource<ActorInventoryEvent>                                                        inventoryEventSource;                           // 000
-		NiPointer<bhkNPCollisionObject>                                                            poseBound;                                      // 058
-		ActorPackage                                                                               runOncePackage;                                 // 060
-		BSTArray<ActorHandle>                                                                      deadDetectList;                                 // 090
-		BSSimpleList<TESObjectREFR*>                                                               refListChairBed;                                // 0A8
-		NiPoint3                                                                                   rotation;                                       // 0B8
-		NiPoint3                                                                                   rotationSpeed;                                  // 0C4
-		NiPoint3                                                                                   actorMountPosition;                             // 0D0
-		NiPoint3                                                                                   furniturePathPoint;                             // 0DC
-		NiPoint3                                                                                   lastSeenPosition;                               // 0E8
-		ActorHandle                                                                                bleedoutAttacker;                               // 0F4
-		REX::EnumSet<MagicSystem::WardState, std::int32_t>                                         wardState;                                      // 0F8
-		BSTSmartPointer<BSResponse<BSFixedString, Actor, BSFixedString, DoNothingUnhandledPolicy>> animResponse;                                   // 100
-		BSTArray<CommandedActorData>                                                               commandedActors;                                // 108
-		NiNode*                                                                                    damageRootNode[26];                             // 120
-		NiNode*                                                                                    weaponBone;                                     // 1F0
-		NiAVObject*                                                                                headNode;                                       // 1F8
-		NiAVObject*                                                                                torsoNode;                                      // 200
-		NiAVObject*                                                                                faceTargetSourceNode;                           // 208
-		BSFaceGenNiNode*                                                                           faceNodeSkinned;                                // 210
-		NiPointer<BSLightingShaderProperty>                                                        lightingProperty;                               // 218
-		QueuedItem*                                                                                listItemstoEquipUnequip;                        // 220
-		HitData*                                                                                   lastHitData;                                    // 228
-		DeferredHideLimb*                                                                          headDeferredHideLimb;                           // 230
-		ActiveEffectList                                                                           activeEffects;                                  // 238
-		BSTSmartPointer<BSAnimationGraphManager>                                                   animationGraphManager;                          // 258
-		BSAnimationGraphVariableCache*                                                             animationVariableCache;                         // 260
-		BSTArray<SubGraphIdleRootData>                                                             subGraphIdleManagerRoots;                       // 268
-		BSSpinLock                                                                                 equippedItemsLock;                              // 280
-		BSTArray<EquippedItem>                                                                     equippedItems;                                  // 288
-		BSTArray<BSClothExtraData*>                                                                clothExtraDataCache;                            // 2A0
-		BSTArray<BSTSmallArray<SubgraphHandle, 2>>                                                 subGraphHandles;                                // 2B8
-		BSTSmallArray<SubgraphIdentifier, 2>                                                       currentDefaultSubGraphID;                       // 2D0
-		BSTSmallArray<SubgraphIdentifier, 2>                                                       requestedDefaultSubGraphID;                     // 2F0
-		BSTSmallArray<SubgraphIdentifier, 2>                                                       currentWeaponSubGraphID;                        // 310
-		BSTSmallArray<SubgraphIdentifier, 2>                                                       requestedWeaponSubGraphID;                      // 330
-		BSTSmartPointer<IAnimationStanceData>                                                      stanceData;                                     // 350
-		BSTArray<BSTTuple<std::uint32_t, AnimationStanceNodeLocationData<NiPoint3>>>               nodeLocationArray;                              // 358
-		float                                                                                      stanceHeightArray[6][2];                        // 370
-		float                                                                                      headHeightOffset;                               // 3A0
-		ObjectRefHandle                                                                            currentFurniture;                               // 3A4
-		ObjectRefHandle                                                                            occupiedFurniture;                              // 3A8
-		TESIdleForm*                                                                               currentIdle;                                    // 3B0
-		ActorHandle                                                                                commandingActor;                                // 3B8
-		const TESIdleForm*                                                                         furnitureIdle;                                  // 3C0
-		BSFaceGenAnimationData*                                                                    faceAnimationData;                              // 3C8
-		MagicItem*                                                                                 currentPackageSpell;                            // 3D0
-		TESObjectWEAP*                                                                             lastBoundWeapon;                                // 3D8
-		NiPointer<bhkCharacterController>                                                          charController;                                 // 3E0
-		BSTSmartPointer<bhkRagdollPenetrationUtil>                                                 penetrationDetectUtil;                          // 3E8
-		NiPointer<QueuedFile>                                                                      bodyPartPreload;                                // 3F0
-		TESIdleForm*                                                                               lastIdlePlayed;                                 // 3F8
-		AIPerkData*                                                                                perkData;                                       // 400
-		NiPoint3                                                                                   lookAtLocation;                                 // 408
-		float                                                                                      pursueTimer;                                    // 414
-		float                                                                                      furnitureAngle;                                 // 418
-		float                                                                                      furnitureEntryFootstepDeltaTarget;              // 41C
-		float                                                                                      packageIdleTimer;                               // 420
-		float                                                                                      equippedWeight;                                 // 424
-		float                                                                                      desiredSpeed;                                   // 428
-		float                                                                                      animationSpeed;                                 // 42C
-		float                                                                                      bleedoutTimer;                                  // 430
-		float                                                                                      bleedoutRate;                                   // 434
-		float                                                                                      bleedoutMaxHealth;                              // 438
-		float                                                                                      maxWardPower;                                   // 43C
-		float                                                                                      animGraphEventTimeout;                          // 440
-		float                                                                                      torchEvalTimer;                                 // 444
-		float                                                                                      alphaMult;                                      // 448
-		float                                                                                      scriptRefractPower;                             // 44C
-		float                                                                                      sleepingTimer;                                  // 450
-		float                                                                                      deferredKillTimer;                              // 454
-		float                                                                                      killMoveTimer;                                  // 458
-		float                                                                                      staggerTimer;                                   // 45C
-		float                                                                                      mountDismountSafetyTimer;                       // 460
-		AITimeStamp                                                                                rangeWaypointIdleTimer;                         // 464
-		std::int32_t                                                                               packageIdleNumber;                              // 468
-		std::int32_t                                                                               reservationSlot;                                // 46C
-		SubgraphIdentifier                                                                         currentFurnitureSubgraphID;                     // 470
-		std::uint32_t                                                                              currentFurnitureMarkerID;                       // 478
-		std::uint32_t                                                                              occupiedFurnitureMarkerID;                      // 47C
-		std::uint64_t                                                                              nextExtraArrow3DUpdate;                         // 480
-		std::uint32_t                                                                              deferredKill;                                   // 488
-		std::uint32_t                                                                              flareFlags;                                     // 48C
-		REX::EnumSet<PACKAGE_OBJECT_TYPE, std::int32_t>                                            useItem;                                        // 490
-		std::int16_t                                                                               animActionSuccess;                              // 494
-		std::uint16_t                                                                              update3DModel;                                  // 496
-		std::int8_t                                                                                weaponCullCounter;                              // 498
-		std::int8_t                                                                                archetypeChangeType;                            // 499
-		bool                                                                                       animWeaponCull;                                 // 49A
-		bool                                                                                       aimingTarget;                                   // 49B
-		bool                                                                                       doneClothesChange;                              // 49C
-		bool                                                                                       pickPackIdle;                                   // 49D
-		bool                                                                                       doneOnce;                                       // 49E
-		bool                                                                                       refreshFlareFlags;                              // 49F
-		bool                                                                                       pickPocketed;                                   // 4A0
-		bool                                                                                       summonedCreature;                               // 4A1
-		bool                                                                                       forceNextUpdate;                                // 4A2
-		bool                                                                                       playedBeginIdles;                               // 4A3
-		bool                                                                                       playedEndIdles;                                 // 4A4
-		bool                                                                                       quickPlacement;                                 // 4A5
-		bool                                                                                       beenAttacked;                                   // 4A6
-		bool                                                                                       alwaysHit;                                      // 4A7
-		bool                                                                                       doNoDamage;                                     // 4A8
-		bool                                                                                       soulTrapped;                                    // 4A9
-		bool                                                                                       lookAt;                                         // 4AA
-		bool                                                                                       eating;                                         // 4AB
-		bool                                                                                       calcLight;                                      // 4AC
-		bool                                                                                       preventCombat;                                  // 4AD
-		bool                                                                                       dyingFromBleedout;                              // 4AE
-		bool                                                                                       fleeing;                                        // 4AF
-		bool                                                                                       instantGetOut;                                  // 4B0
-		bool                                                                                       hostileGuard;                                   // 4B1
-		bool                                                                                       stopIdleFailed;                                 // 4B2
-		bool                                                                                       killQueued;                                     // 4B3
-		bool                                                                                       ragdollInstant;                                 // 4B4
-		bool                                                                                       scriptDeferredKill;                             // 4B5
-		bool                                                                                       furnitureEntryLeftFootFirst;                    // 4B6
-		bool                                                                                       furnitureAnimationPlayed;                       // 4B7
-		bool                                                                                       queuedInstantInteractionAnimation;              // 4B8
-		bool                                                                                       queuedModifyInitialAnimationPose;               // 4B9
-		bool                                                                                       avoidPlayer;                                    // 4BA
-		bool                                                                                       usingPathingFaceTargetWhileTrackingOutOfRange;  // 4BB
+		BSTEventSource<ActorInventoryEvent>                                                        inventoryEventSource;     // 000
+		NiPointer<bhkNPCollisionObject>                                                            poseBound;                // 058
+		ActorPackage                                                                               runOncePackage;           // 060
+		BSTArray<ActorHandle>                                                                      deadDetectList;           // 090
+		BSSimpleList<TESObjectREFR*>                                                               refListChairBed;          // 0A8
+		NiPoint3                                                                                   rotation;                 // 0B8
+		NiPoint3                                                                                   rotationSpeed;            // 0C4
+		NiPoint3                                                                                   actorMountPosition;       // 0D0
+		NiPoint3                                                                                   furniturePathPoint;       // 0DC
+		NiPoint3                                                                                   lastSeenPosition;         // 0E8
+		ActorHandle                                                                                bleedoutAttacker;         // 0F4
+		REX::EnumSet<MagicSystem::WardState, std::int32_t>                                         wardState;                // 0F8
+		BSTSmartPointer<BSResponse<BSFixedString, Actor, BSFixedString, DoNothingUnhandledPolicy>> animResponse;             // 100
+		BSTArray<CommandedActorData>                                                               commandedActors;          // 108
+		NiNode*                                                                                    damageRootNode[26];       // 120
+		NiNode*                                                                                    weaponBone;               // 1F0
+		NiAVObject*                                                                                headNode;                 // 1F8
+		NiAVObject*                                                                                torsoNode;                // 200
+		NiAVObject*                                                                                faceTargetSourceNode;     // 208
+		BSFaceGenNiNode*                                                                           faceNodeSkinned;          // 210
+		NiPointer<BSLightingShaderProperty>                                                        lightingProperty;         // 218
+		QueuedItem*                                                                                listItemstoEquipUnequip;  // 220
+		HitData*                                                                                   lastHitData;              // 228
+		DeferredHideLimb*                                                                          headDeferredHideLimb;     // 230
+		ActiveEffectList                                                                           activeEffects;            // 238
+		BSTSmartPointer<BSAnimationGraphManager>                                                   animationGraphManager;    // 258
+		BSAnimationGraphVariableCache*                                                             animationVariableCache;   // 260
+#ifdef ENABLE_FALLOUT_VR
+		// f4sevr-port: VR inserts 8 bytes of state here (a single qword, init'd to 0 by the
+		// MiddleHighProcessData ctor at FUN_140ed8370 via `*(_QWORD *)(a1 + 616) = 0`). The
+		// destructor never touches it, so it's a non-owning POD — likely a void* / handle.
+		// All fields from subGraphIdleManagerRoots onward are shifted by +8 in VR vs flat.
+		// Verified against Fallout4VR.exe via IDA:
+		//   AIProcess::GetEquippedItems       → middleHigh + 0x290 (BSTArray<EquippedItem>)
+		//   FUN_140ecf0a0 (lock getter)        → middleHigh + 0x288 (equippedItemsLock)
+		//   AIProcess::AccessClothExtraDataCache → middleHigh + 0x2A8 (clothExtraDataCache)
+		// The shift cascades to the end of the struct (sizeof grows from 0x4C0 to 0x4C8).
+		std::byte vrPostAnimVarCachePadding[0x8];  // 268 (VR only)
+#endif
+		BSTArray<SubGraphIdleRootData>                                               subGraphIdleManagerRoots;                       // flat: 268  vr: 270
+		BSSpinLock                                                                   equippedItemsLock;                              // flat: 280  vr: 288
+		BSTArray<EquippedItem>                                                       equippedItems;                                  // flat: 288  vr: 290
+		BSTArray<BSClothExtraData*>                                                  clothExtraDataCache;                            // 2A0
+		BSTArray<BSTSmallArray<SubgraphHandle, 2>>                                   subGraphHandles;                                // 2B8
+		BSTSmallArray<SubgraphIdentifier, 2>                                         currentDefaultSubGraphID;                       // 2D0
+		BSTSmallArray<SubgraphIdentifier, 2>                                         requestedDefaultSubGraphID;                     // 2F0
+		BSTSmallArray<SubgraphIdentifier, 2>                                         currentWeaponSubGraphID;                        // 310
+		BSTSmallArray<SubgraphIdentifier, 2>                                         requestedWeaponSubGraphID;                      // 330
+		BSTSmartPointer<IAnimationStanceData>                                        stanceData;                                     // 350
+		BSTArray<BSTTuple<std::uint32_t, AnimationStanceNodeLocationData<NiPoint3>>> nodeLocationArray;                              // 358
+		float                                                                        stanceHeightArray[6][2];                        // 370
+		float                                                                        headHeightOffset;                               // 3A0
+		ObjectRefHandle                                                              currentFurniture;                               // 3A4
+		ObjectRefHandle                                                              occupiedFurniture;                              // 3A8
+		TESIdleForm*                                                                 currentIdle;                                    // 3B0
+		ActorHandle                                                                  commandingActor;                                // 3B8
+		const TESIdleForm*                                                           furnitureIdle;                                  // 3C0
+		BSFaceGenAnimationData*                                                      faceAnimationData;                              // 3C8
+		MagicItem*                                                                   currentPackageSpell;                            // 3D0
+		TESObjectWEAP*                                                               lastBoundWeapon;                                // 3D8
+		NiPointer<bhkCharacterController>                                            charController;                                 // 3E0
+		BSTSmartPointer<bhkRagdollPenetrationUtil>                                   penetrationDetectUtil;                          // 3E8
+		NiPointer<QueuedFile>                                                        bodyPartPreload;                                // 3F0
+		TESIdleForm*                                                                 lastIdlePlayed;                                 // 3F8
+		AIPerkData*                                                                  perkData;                                       // 400
+		NiPoint3                                                                     lookAtLocation;                                 // 408
+		float                                                                        pursueTimer;                                    // 414
+		float                                                                        furnitureAngle;                                 // 418
+		float                                                                        furnitureEntryFootstepDeltaTarget;              // 41C
+		float                                                                        packageIdleTimer;                               // 420
+		float                                                                        equippedWeight;                                 // 424
+		float                                                                        desiredSpeed;                                   // 428
+		float                                                                        animationSpeed;                                 // 42C
+		float                                                                        bleedoutTimer;                                  // 430
+		float                                                                        bleedoutRate;                                   // 434
+		float                                                                        bleedoutMaxHealth;                              // 438
+		float                                                                        maxWardPower;                                   // 43C
+		float                                                                        animGraphEventTimeout;                          // 440
+		float                                                                        torchEvalTimer;                                 // 444
+		float                                                                        alphaMult;                                      // 448
+		float                                                                        scriptRefractPower;                             // 44C
+		float                                                                        sleepingTimer;                                  // 450
+		float                                                                        deferredKillTimer;                              // 454
+		float                                                                        killMoveTimer;                                  // 458
+		float                                                                        staggerTimer;                                   // 45C
+		float                                                                        mountDismountSafetyTimer;                       // 460
+		AITimeStamp                                                                  rangeWaypointIdleTimer;                         // 464
+		std::int32_t                                                                 packageIdleNumber;                              // 468
+		std::int32_t                                                                 reservationSlot;                                // 46C
+		SubgraphIdentifier                                                           currentFurnitureSubgraphID;                     // 470
+		std::uint32_t                                                                currentFurnitureMarkerID;                       // 478
+		std::uint32_t                                                                occupiedFurnitureMarkerID;                      // 47C
+		std::uint64_t                                                                nextExtraArrow3DUpdate;                         // 480
+		std::uint32_t                                                                deferredKill;                                   // 488
+		std::uint32_t                                                                flareFlags;                                     // 48C
+		REX::EnumSet<PACKAGE_OBJECT_TYPE, std::int32_t>                              useItem;                                        // 490
+		std::int16_t                                                                 animActionSuccess;                              // 494
+		std::uint16_t                                                                update3DModel;                                  // 496
+		std::int8_t                                                                  weaponCullCounter;                              // 498
+		std::int8_t                                                                  archetypeChangeType;                            // 499
+		bool                                                                         animWeaponCull;                                 // 49A
+		bool                                                                         aimingTarget;                                   // 49B
+		bool                                                                         doneClothesChange;                              // 49C
+		bool                                                                         pickPackIdle;                                   // 49D
+		bool                                                                         doneOnce;                                       // 49E
+		bool                                                                         refreshFlareFlags;                              // 49F
+		bool                                                                         pickPocketed;                                   // 4A0
+		bool                                                                         summonedCreature;                               // 4A1
+		bool                                                                         forceNextUpdate;                                // 4A2
+		bool                                                                         playedBeginIdles;                               // 4A3
+		bool                                                                         playedEndIdles;                                 // 4A4
+		bool                                                                         quickPlacement;                                 // 4A5
+		bool                                                                         beenAttacked;                                   // 4A6
+		bool                                                                         alwaysHit;                                      // 4A7
+		bool                                                                         doNoDamage;                                     // 4A8
+		bool                                                                         soulTrapped;                                    // 4A9
+		bool                                                                         lookAt;                                         // 4AA
+		bool                                                                         eating;                                         // 4AB
+		bool                                                                         calcLight;                                      // 4AC
+		bool                                                                         preventCombat;                                  // 4AD
+		bool                                                                         dyingFromBleedout;                              // 4AE
+		bool                                                                         fleeing;                                        // 4AF
+		bool                                                                         instantGetOut;                                  // 4B0
+		bool                                                                         hostileGuard;                                   // 4B1
+		bool                                                                         stopIdleFailed;                                 // 4B2
+		bool                                                                         killQueued;                                     // 4B3
+		bool                                                                         ragdollInstant;                                 // 4B4
+		bool                                                                         scriptDeferredKill;                             // 4B5
+		bool                                                                         furnitureEntryLeftFootFirst;                    // 4B6
+		bool                                                                         furnitureAnimationPlayed;                       // 4B7
+		bool                                                                         queuedInstantInteractionAnimation;              // 4B8
+		bool                                                                         queuedModifyInitialAnimationPose;               // 4B9
+		bool                                                                         avoidPlayer;                                    // 4BA
+		bool                                                                         usingPathingFaceTargetWhileTrackingOutOfRange;  // 4BB
 	};
+#ifdef ENABLE_FALLOUT_VR
+	// f4sevr-port: VR adds 8 bytes after animationVariableCache (offset 0x268); everything from
+	// subGraphIdleManagerRoots onward shifts by +8.
+	static_assert(sizeof(MiddleHighProcessData) == 0x4C8);
+	static_assert(offsetof(MiddleHighProcessData, subGraphIdleManagerRoots) == 0x270);
+	static_assert(offsetof(MiddleHighProcessData, equippedItemsLock) == 0x288);
+	static_assert(offsetof(MiddleHighProcessData, equippedItems) == 0x290);
+	static_assert(offsetof(MiddleHighProcessData, clothExtraDataCache) == 0x2A8);
+#else
 	static_assert(sizeof(MiddleHighProcessData) == 0x4C0);
+#endif
 
 	class CachedValueData
 	{
@@ -1372,6 +1396,71 @@ namespace RE
 		bool                                             trespassing;                  // 48A
 	};
 	static_assert(sizeof(Actor) == 0x490);
+	// f4sevr-port: lock down field offsets confirmed against f4sevr Forms.h.
+	// Note: f4sevr names the field at 0x428 `equipData` (typed `ActorEquipData*`); CommonLibF4VR
+	// names it `biped` (typed `BSTSmartPointer<BipedAnim>`). Both refer to the same 8-byte field —
+	// f4sevr's `ActorEquipData` and CommonLibF4VR's `BipedAnim` describe the same biped/equip slot data.
+	static_assert(offsetof(Actor, race) == 0x418);
+	static_assert(offsetof(Actor, biped) == 0x428);
+
+	// f4sevr-port: niFlags @ 0x2D0 (CommonLibF4VR-named) is what f4sevr/f4se SDK calls `actorFlags`.
+	// The SDK declares only a single named bit on this field (kFlag_Teammate at bit 26) plus the
+	// IsPlayerTeammate() accessor. Other bits are unnamed there. We expose the same enum + accessor
+	// as a free function-style helper so VR mods previously using F4SEVR::Actor can migrate.
+	// Note: distinct from BOOL_FLAGS @ 0x43C — that's a different uint32 (boolFlags) with its own
+	// 32 named bits (incl. kDoNotShowOnStealthMeter at bit 26 — same bit number, different field).
+	enum ActorFlagBits : std::uint32_t
+	{
+		kActorFlag_Teammate = 1u << 26,
+	};
+
+	[[nodiscard]] inline bool IsPlayerTeammate(const Actor& a_actor) noexcept
+	{
+		return (a_actor.niFlags.flags & kActorFlag_Teammate) == kActorFlag_Teammate;
+	}
+
+	// f4sevr-port: f4sevr SDK GameReferences.cpp:39 — finds the equipped stack's ExtraDataList
+	// for the item in the given biped slot. Returns true if found and writes through a_outExtraData.
+	// Ported logic over CommonLibF4VR's BGSInventoryList::ForEachStack and the BIPOBJECT array.
+	//
+	// Slot indices are values of BIPED_OBJECT (0..kTotal=44). f4sevr uses ActorEquipData::kMaxSlots
+	// which equals BIPED_OBJECT::kTotal in this codebase.
+	inline bool GetEquippedExtraData(Actor& a_actor, std::uint32_t a_slotIndex, ExtraDataList** a_outExtraData)
+	{
+		if (!a_outExtraData) {
+			return false;
+		}
+		*a_outExtraData = nullptr;
+		if (a_slotIndex >= static_cast<std::uint32_t>(std::to_underlying(BIPED_OBJECT::kTotal))) {
+			return false;
+		}
+		const auto biped = a_actor.biped.get();
+		if (!biped) {
+			return false;
+		}
+		// f4sevr's `slots[i].item` (TESForm*) ≡ CommonLibF4VR's `object[i].parent.object` (TESForm*).
+		const auto* slotItem = biped->object[a_slotIndex].parent.object;
+		if (!slotItem || !a_actor.inventoryList) {
+			return false;
+		}
+
+		a_actor.inventoryList->ForEachStack(
+			[slotItem](BGSInventoryItem& a_invItem) {
+				// CommonLibF4VR types invItem.object as TESBoundObject*; compare by base TESForm*.
+				return static_cast<const TESForm*>(a_invItem.object) == slotItem;
+			},
+			[a_outExtraData](BGSInventoryItem& /*a_invItem*/, BGSInventoryItem::Stack& a_stack) {
+				if (a_stack.IsEquipped()) {
+					if (auto* ed = a_stack.extra.get()) {
+						*a_outExtraData = ed;
+					}
+					return false;  // stop iteration
+				}
+				return true;  // keep going
+			});
+
+		return *a_outExtraData != nullptr;
+	}
 
 	class ActorEquipManager :
 		public BSTSingletonSDM<ActorEquipManager>,            // 00

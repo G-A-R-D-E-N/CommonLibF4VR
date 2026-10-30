@@ -35,8 +35,6 @@ jobs:
         compiler:
           - msvc
         version:
-          - all
-          - flat
           - vr
     # vcpkg `files` binary cache (x-gha was removed upstream). Do not drop
     # FORCE_SYSTEM_BINARIES: the ABI hash this cache keys off depends on it staying stable.
